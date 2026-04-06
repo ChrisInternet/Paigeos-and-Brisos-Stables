@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paigeos and Brisos Stables</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Sohne', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+            color: #e2e8f0;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+            animation: slideDown 0.8s ease-out;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            background: linear-gradient(120deg, #60a5fa, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -1px;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: #94a3b8;
+            font-weight: 400;
+        }
+
+        .tables {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .section {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        .section:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            gap: 12px;
+        }
+
+        .person-name {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #f1f5f9;
+        }
+
+        .person-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        .person-indicator.paigeos {
+            background: #60a5fa;
+        }
+
+        .person-indicator.briso {
+            background: #a78bfa;
+        }
+
+        .entries-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .entry {
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .entry:hover {
+            border-color: rgba(148, 163, 184, 0.5);
+            background: rgba(30, 41, 59, 1);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+        }
+
+        .entry-number {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+        }
+
+        .image-upload {
+            margin-bottom: 16px;
+        }
+
+        .image-upload input[type="file"] {
+            display: none;
+        }
+
+        .upload-btn {
+            display: inline-block;
+            padding: 10px 16px;
+            background: rgba(96, 165, 250, 0.15);
+            border: 1px dashed #60a5fa;
+            border-radius: 8px;
+            color: #60a5fa;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .upload-btn:hover {
+            background: rgba(96, 165, 250, 0.25);
+            border-color: #3b82f6;
+        }
+
+        .section:nth-child(2) .upload-btn {
+            border-color: #a78bfa;
+            color: #a78bfa;
+            background: rgba(167, 139, 250, 0.15);
+        }
+
+        .section:nth-child(2) .upload-btn:hover {
+            background: rgba(167, 139, 250, 0.25);
+            border-color: #9333ea;
+        }
+
+        .image-preview {
+            width: 100%;
+            height: 200px;
+            border-radius: 8px;
+            object-fit: cover;
+            margin-bottom: 12px;
+            background: rgba(15, 23, 42, 0.8);
+        }
+
+        .comment-input {
+            width: 100%;
+            padding: 12px;
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            border-radius: 8px;
+            color: #e2e8f0;
+            font-family: inherit;
+            font-size: 0.95rem;
+            resize: vertical;
+            min-height: 80px;
+            transition: all 0.3s ease;
+        }
+
+        .comment-input:focus {
+            outline: none;
+            border-color: #60a5fa;
+            background: rgba(15, 23, 42, 0.95);
+            box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.1);
+        }
+
+        .section:nth-child(2) .comment-input:focus {
+            border-color: #a78bfa;
+            box-shadow: 0 0 0 3px rgba(167, 139, 250, 0.1);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 12px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 10px 14px;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-save {
+            background: #60a5fa;
+            color: #0f172a;
+        }
+
+        .btn-save:hover {
+            background: #3b82f6;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(96, 165, 250, 0.3);
+        }
+
+        .section:nth-child(2) .btn-save {
+            background: #a78bfa;
+        }
+
+        .section:nth-child(2) .btn-save:hover {
+            background: #9333ea;
+            box-shadow: 0 4px 12px rgba(167, 139, 250, 0.3);
+        }
+
+        .btn-delete {
+            background: rgba(239, 68, 68, 0.2);
+            color: #fca5a5;
+        }
+
+        .btn-delete:hover {
+            background: rgba(239, 68, 68, 0.4);
+            transform: translateY(-1px);
+        }
+
+        .empty-image {
+            width: 100%;
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(15, 23, 42, 0.5);
+            border-radius: 8px;
+            color: #64748b;
+            font-size: 0.9rem;
+            margin-bottom: 12px;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        @media (max-width: 768px) {
+            .tables {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .person-name {
+                font-size: 1.5rem;
+            }
+        }
+
+        footer {
+            text-align: center;
+            color: #64748b;
+            font-size: 0.9rem;
+            margin-top: 60px;
+            padding-top: 40px;
+            border-top: 1px solid rgba(148, 163, 184, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Paigeos and Brisos Stables</h1>
+            <p class="subtitle">A collaborative collection of moments & thoughts</p>
+        </header>
+
+        <div class="tables">
+            <!-- PAIGEOS SECTION -->
+            <section class="section" id="paigeos-section">
+                <div class="section-header">
+                    <span class="person-name">Paigeos</span>
+                    <div class="person-indicator paigeos"></div>
+                </div>
+                <div class="entries-list" id="paigeos-list"></div>
+            </section>
+
+            <!-- BRISO SECTION -->
+            <section class="section" id="briso-section">
+                <div class="section-header">
+                    <span class="person-name">Briso</span>
+                    <div class="person-indicator briso"></div>
+                </div>
+                <div class="entries-list" id="briso-list"></div>
+            </section>
+        </div>
+
+        <footer>
+            <p>💾 All changes are saved automatically to your browser</p>
+        </footer>
+    </div>
+
+    <script>
+        const STORAGE_KEY_PAIGEOS = 'paigeos_entries';
+        const STORAGE_KEY_BRISO = 'briso_entries';
+        const ENTRIES_COUNT = 5;
+
+        // Initialize data structure
+        function initializeData() {
+            const defaultData = Array.from({ length: ENTRIES_COUNT }, (_, i) => ({
+                id: i + 1,
+                image: null,
+                comment: ''
+            }));
+
+            if (!localStorage.getItem(STORAGE_KEY_PAIGEOS)) {
+                localStorage.setItem(STORAGE_KEY_PAIGEOS, JSON.stringify(defaultData));
+            }
+            if (!localStorage.getItem(STORAGE_KEY_BRISO)) {
+                localStorage.setItem(STORAGE_KEY_BRISO, JSON.stringify(defaultData));
+            }
+        }
+
+        // Load data from localStorage
+        function loadData(storageKey) {
+            const data = localStorage.getItem(storageKey);
+            return data ? JSON.parse(data) : [];
+        }
+
+        // Save data to localStorage
+        function saveData(storageKey, data) {
+            localStorage.setItem(storageKey, JSON.stringify(data));
+        }
+
+        // Render entries for a person
+        function renderEntries(person, storageKey, containerId) {
+            const container = document.getElementById(containerId);
+            const entries = loadData(storageKey);
+
+            container.innerHTML = entries.map((entry, index) => `
+                <div class="entry" data-id="${entry.id}">
+                    <div class="entry-number">Picture ${entry.id}</div>
+                    
+                    <div class="image-upload">
+                        <input type="file" class="image-input" accept="image/*" data-person="${person}" data-index="${index}">
+                        ${entry.image 
+                            ? `<img src="${entry.image}" class="image-preview" alt="Entry ${entry.id}">` 
+                            : `<div class="empty-image">Click to upload image</div>`
+                        }
+                        <label class="upload-btn" style="cursor: pointer;">
+                            📸 ${entry.image ? 'Change Image' : 'Upload Image'}
+                            <input type="file" class="image-input" accept="image/*" data-person="${person}" data-index="${index}" style="display: none;">
+                        </label>
+                    </div>
+
+                    <textarea class="comment-input" placeholder="Add your comment here..." data-person="${person}" data-index="${index}">${entry.comment}</textarea>
+
+                    <div class="button-group">
+                        <button class="btn btn-save" data-person="${person}" data-index="${index}">✓ Save</button>
+                        <button class="btn btn-delete" data-person="${person}" data-index="${index}">🗑 Clear</button>
+                    </div>
+                </div>
+            `).join('');
+
+            attachEventListeners(person, storageKey, containerId);
+        }
+
+        // Attach event listeners
+        function attachEventListeners(person, storageKey, containerId) {
+            const container = document.getElementById(containerId);
+
+            // File input change
+            container.querySelectorAll('.image-input').forEach(input => {
+                input.addEventListener('change', (e) => {
+                    const file = e.target.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = (event) => {
+                            const person = e.target.dataset.person;
+                            const index = parseInt(e.target.dataset.index);
+                            const data = loadData(storageKey);
+                            data[index].image = event.target.result;
+                            saveData(storageKey, data);
+                            renderEntries(person, storageKey, containerId);
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                });
+            });
+
+            // Save button
+            container.querySelectorAll('.btn-save').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const index = parseInt(e.target.dataset.index);
+                    const comment = e.target.closest('.entry').querySelector('.comment-input').value;
+                    const data = loadData(storageKey);
+                    data[index].comment = comment;
+                    saveData(storageKey, data);
+                    renderEntries(person, storageKey, containerId);
+                });
+            });
+
+            // Delete button
+            container.querySelectorAll('.btn-delete').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const index = parseInt(e.target.dataset.index);
+                    const data = loadData(storageKey);
+                    data[index] = { id: index + 1, image: null, comment: '' };
+                    saveData(storageKey, data);
+                    renderEntries(person, storageKey, containerId);
+                });
+            });
+        }
+
+        // Initialize
+        initializeData();
+        renderEntries('paigeos', STORAGE_KEY_PAIGEOS, 'paigeos-list');
+        renderEntries('briso', STORAGE_KEY_BRISO, 'briso-list');
+    </script>
+</body>
+</html>
